@@ -1,18 +1,36 @@
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
+import net.mamoe.mirai.contact.Contact.Companion.sendImage
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.subscribeGroupMessages
+import net.mamoe.mirai.message.data.Image
+import net.mamoe.mirai.message.data.PlainText
+import net.mamoe.mirai.message.data.toMessageChain
 import net.mamoe.mirai.utils.BotConfiguration
 import javax.swing.GroupLayout
 
 suspend fun main(){
-  val QQ = 114L
-  val password = ""
-  val groupId = 860910673L
+  val QQ = 123L
+  val password = "g"
+  val groupId = 9769L
   initQQ(QQ,password,groupId){
-    val senderName = senderName
-    val msg_text = this.message.contentToString()
-    println("$senderName say: $msg_text")
+    println(senderName)
+   message.forEach {
+     when (it) {
+       is Image -> {
+         println(it.imageId)
+         //图片url
+         println("http://gchat.qpic.cn/gchatpic_new/${bot.id}/0-0-${
+           it.imageId.substring(1..36)
+             .replace("-", "")
+         }/0?term=2")
+       }
+       is PlainText -> {
+         println(it.content)
+       }
+       else -> {}
+     }
+   }
   }
 
 }
